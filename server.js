@@ -15,8 +15,7 @@ const db = mysql.createConnection(
         user: 'root',
         password: 'password',
         database: 'movies_db'
-    },
-    
+    },   
     console.log(`Connected to the movies_db database.`));
 
 // GET route
@@ -62,8 +61,6 @@ app.post('/api/update-review', (req, res) => {
 });
 
 // DELETE route
-
-
 
 
 app.listen(PORT, () =>
