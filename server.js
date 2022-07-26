@@ -29,9 +29,20 @@ app.get('/api/movies', (req, res) =>
   }
 );
 
-// POST route
+// POST route for movies
+app.post('/api/add-movie', (req, res) => {
+    // let movieName = req.params[0].movie_name;
+    console.log("attempting to add " + req.body.movie_name);
+    if (req.body.movie_name) {
+        res.status(200);
+        res.send("Movie added!")
+    } else {
+        res.status(400);
+        res.send("Error adding movie :(");
+    }
+})
 
-// PUT route
+// POST route for reviews
 
 // DELETE route
 
