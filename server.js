@@ -48,13 +48,17 @@ app.post('/api/add-movie', (req, res) => {
 // POST route for reviews
 app.post('/api/update-review', (req, res) => {
     console.log("attempting to add review " + req.body.movie_id + " " + req.body.review);
-    if (req.body.movie_id && req.body.review) {
+    if (req.body.movie_id && req.body.review) { // TODO: also check that the movie_id is one that actually exists
         db.query('INSERT INTO reviews (movie_id, review) VALUES (?, ?)', [req.body.movie_id, req.body.review], function (err, results) {
-            if (err) throw err;
+            if (err) {
+                res.status(400);
+                res.send("Error adding review :(");
+                throw err
+            }
+            res.status(200);
+            res.send("Review added!")
             console.log(results);
         });
-        res.status(200);
-        res.send("Review added!")
     } else {
         res.status(400);
         res.send("Error adding review :(");
@@ -62,6 +66,29 @@ app.post('/api/update-review', (req, res) => {
 });
 
 // DELETE route
+app.delete('/api/movie/:id', (req, res) => {
+    console.log("attempting to delete movie with ID  " + req.params.id);
+    if (req.params.id) { 
+        db.query('DELETE FROM movies WHERE id = ?', req.params.id, function (err, results) {
+            if (err) {
+                res.status(400);
+                res.send("Error deleting movie :(");
+                throw err
+            }
+            res.status(200);
+            res.send("Movie deleted!")
+            console.log(results);
+        });
+    } else {
+        res.status(400);
+        res.send("Error deleting movie :(");
+    }
+});
+
+
+
+
+
 
 
 
