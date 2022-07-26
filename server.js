@@ -31,18 +31,35 @@ app.get('/api/movies', (req, res) =>
 
 // POST route for movies
 app.post('/api/add-movie', (req, res) => {
-    // let movieName = req.params[0].movie_name;
     console.log("attempting to add " + req.body.movie_name);
     if (req.body.movie_name) {
+        db.query('INSERT INTO movies (movie_name) VALUES (?)', req.body.movie_name, function (err, results) {
+            if (err) throw err;
+            console.log(results);
+        });
         res.status(200);
         res.send("Movie added!")
     } else {
         res.status(400);
         res.send("Error adding movie :(");
     }
-})
+});
 
 // POST route for reviews
+app.post('/api/update-review', (req, res) => {
+    console.log("attempting to add review " + req.body.movie_id + " " + req.body.review);
+    if (req.body.movie_id && req.body.review) {
+        db.query('INSERT INTO reviews (movie_id, review) VALUES (?, ?)', [req.body.movie_id, req.body.review], function (err, results) {
+            if (err) throw err;
+            console.log(results);
+        });
+        res.status(200);
+        res.send("Review added!")
+    } else {
+        res.status(400);
+        res.send("Error adding review :(");
+    }
+});
 
 // DELETE route
 
